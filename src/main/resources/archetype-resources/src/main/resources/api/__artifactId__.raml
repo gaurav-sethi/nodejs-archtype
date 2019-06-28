@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: ascendon ${projectNameLowerCase} APIs
+version: v1.0
+baseUri: https://localhost:8081/api
+
+uses:
+  common: ../common/traits/api-common-type.raml
+protocols: [ HTTP, HTTPS ]
+
+traits:
+  clientIdEnforced: !include ../common/traits/clientIdEnforced.raml
+  traceable: !include ../common/traits/traceable.raml
+  commonErrorHandling: !include ../common/traits/commonErrorHandling.raml
+  
+/${projectNameLowerCase}:
+  /create:
+    is: [ commonErrorHandling, traceable, clientIdEnforced ]
+    post:
+      description:
+
+      body:
+        application/json:
+          example: !include ${artifactId}-create-request.json
+      responses:
+           201:
+             body:
+               application/json:
+                 example: !include ${artifactId}-create-request.json
+  /update:
+   /{id}:
+    is: [ commonErrorHandling, traceable, clientIdEnforced ]  
+    patch:
+      description:
+      body:
+        application/json:
+          example: !include ${artifactId}-update-request.json
+      responses:
+           204:
+        
+  /delete:
+   /{id}:
+     is: [ commonErrorHandling, traceable, clientIdEnforced ]  
+     delete:
+       description:
+       responses:
+            204:
+                 
+  /find:
+   /{id}:        
+    is: [ commonErrorHandling, traceable, clientIdEnforced ]  
+    get:
+      description:
+      responses:
+           200:
+             body:
+               application/json:
+                 example: !include ${artifactId}-get-response.json                        

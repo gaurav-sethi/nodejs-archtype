@@ -1,0 +1,105 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd ">
+    <munit:config name="${artifactId}-main-apikit-test.xml" />
+    <http:request-config name="HTTP_Request_Configuration" basePath="/api">
+        <http:request-connection host="localhost" port="8081" />
+    </http:request-config>
+    <munit:test name="delete:\\${projectNameLowerCase}\delete\(id):${artifactId}-config-204--FlowTest" description="Verifying functionality of [delete:\\${projectNameLowerCase}\delete\(id):${artifactId}-config-204-]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="${artifactId}-main" />
+            <munit:enable-flow-source value="delete:\\${projectNameLowerCase}\delete\(id):${artifactId}-config" />
+        </munit:enable-flow-sources>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="DELETE" path="/${projectNameLowerCase}/delete/{id}">
+                <http:headers><![CDATA[#[output application/java
+---
+{
+	"client_secret" : "kjihi56b1212vghc35b34kb45k",
+	"applicationId" : "MUNIT",
+	"transactionId" : "blablablablablab",
+	"client_id" : "a934bnj3n45ou5i7nln443b54b"
+}]]]></http:headers>
+				<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	id : 123
+}]]]></http:uri-params>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(204)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 204" />
+        </munit:validation>
+    </munit:test>
+    <munit:test name="patch:\\${projectNameLowerCase}\update\(id):${artifactId}-config-204--FlowTest" description="Verifying functionality of [patch:\\${projectNameLowerCase}\update\(id):${artifactId}-config-204-]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="${artifactId}-main" />
+            <munit:enable-flow-source value="patch:\\${projectNameLowerCase}\update\(id):${artifactId}-config" />
+        </munit:enable-flow-sources>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="PATCH" path="/${projectNameLowerCase}/update/{id}">
+                <http:headers><![CDATA[#[output application/java
+---
+{
+	"client_secret" : "kjihi56b1212vghc35b34kb45k",
+	"applicationId" : "MUNIT",
+	"transactionId" : "blablablablablab",
+	"client_id" : "a934bnj3n45ou5i7nln443b54b",
+	"Content-Type" : "application/json"
+}]]]></http:headers>
+				<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	id : 123
+}]]]></http:uri-params>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(204)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 204" />
+        </munit:validation>
+    </munit:test>
+    <munit:test name="get:\\${projectNameLowerCase}\find\(id):${artifactId}-config-200-application\json-FlowTest" description="Verifying functionality of [get:\\${projectNameLowerCase}\find\(id):${artifactId}-config-200-application\json]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="${artifactId}-main" />
+            <munit:enable-flow-source value="get:\\${projectNameLowerCase}\find\(id):${artifactId}-config" />
+        </munit:enable-flow-sources>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="GET" path="/${projectNameLowerCase}/find/{id}">
+                <http:headers><![CDATA[#[output application/java
+---
+{
+	"Accept" : "application/json",
+	"client_secret" : "kjihi56b1212vghc35b34kb45k",
+	"applicationId" : "MUNIT",
+	"transactionId" : "blablablablablab",
+	"client_id" : "a934bnj3n45ou5i7nln443b54b"
+}]]]></http:headers>
+				<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	id : 123
+}]]]></http:uri-params>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(200)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 200" />
+        </munit:validation>
+    </munit:test>
+    <munit:test name="post:\\${projectNameLowerCase}\create:${artifactId}-config-201-application\json-FlowTest" description="Verifying functionality of [post:\\${projectNameLowerCase}\create:${artifactId}-config-201-application\json]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="${artifactId}-main" />
+            <munit:enable-flow-source value="post:\\${projectNameLowerCase}\create:${artifactId}-config" />
+        </munit:enable-flow-sources>
+		<munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="POST" path="/${projectNameLowerCase}/create">
+                <http:headers>#[{"Accept":"application/json","client_secret":"kjihi56b1212vghc35b34kb45k","applicationId":"MUNIT","transactionId":"blablablablablab","client_id":"a934bnj3n45ou5i7nln443b54b","Content-Type":"application/json"}]</http:headers>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(201)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 201" />
+        </munit:validation>
+    </munit:test>
+</mule>
+

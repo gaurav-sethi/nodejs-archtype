@@ -1,0 +1,62 @@
+#%RAML 1.0 Trait
+usage: Apply this trait to any API that needs to implement the common error handling
+description: Any error encountered within the API would result in the the following responses being generated.
+uses:
+  common: api-common-type.raml
+  
+responses:
+  304:
+    description: Not Modified
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  400:
+    description: Bad Request
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  404:
+    description: Not Found
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  405:
+    description: Method Not Allowed
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  406:
+    description: Not Acceptable
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  409:
+    description: Conflict
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  415:
+    description: Unsupported Media Type
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  500:
+    description: Internal Server Error
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  501:
+    description: Not Implemented
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  502:
+    description: Bad Gateway
+    body:
+      application/json:
+        type: common.commonErrorResponse
+  504:
+    description: Gateway Time-out
+    body:
+      application/json:
+        type: common.commonErrorResponse

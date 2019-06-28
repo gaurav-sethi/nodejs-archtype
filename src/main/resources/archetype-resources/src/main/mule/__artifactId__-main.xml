@@ -1,0 +1,55 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd     http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+    
+    
+    <http:listener-config name="${artifactId}-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    
+    <apikit:config name="${artifactId}-config" raml="${artifactId}.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    
+<!--     <import doc:name="Import" doc:id="10fc7732-80e7-4388-89c4-7305859193a6" file="ascendon-mule-common-functionality.xml" />
+	
+	<import doc:name="Import" doc:id="2d5e3cda-fca2-417a-892f-1be4a142bda6" file="ascendon-mule-common-logging.xml" />
+	
+	<import doc:name="Import" doc:id="af312d60-8f6e-4023-bbe1-33cd4b6603ae" file="ascendon-mule-error-handling.xml" />
+ -->	
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="eeb26834-6b00-44a2-a4c1-ccc2d72fcac3" file="config/${artifactId}-${symbol_dollar}{mule.env}.properties" key="1234567890123456" />
+	
+	<flow name="${artifactId}-main">
+        <http:listener config-ref="${artifactId}-httpListenerConfig" path="/api/*">
+            <http:response statusCode="${symbol_pound}[vars.httpStatus default 200]">
+                <http:headers>${symbol_pound}[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="${symbol_pound}[vars.httpStatus default 500]">
+                <http:body>${symbol_pound}[payload]</http:body>
+                <http:headers>${symbol_pound}[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        
+<!--         <flow-ref doc:name="ascendon-mule-common-request-initiation-subflow" doc:id="5e309470-9ee2-410e-ada3-abeb34aed4f7" name="ascendon-mule-common-request-initiation-subflow"/> -->
+
+		<apikit:router config-ref="${artifactId}-config" />
+		
+		<!--<flow-ref doc:name="ascendon-mule-common-response-finalize-subflow" doc:id="4781ca09-67e0-4657-988f-619476285397" name="ascendon-mule-common-response-finalize-subflow"/>
+        
+         <error-handler ref="ascendon-mule-error-handling_CommonErrorHandler" /> -->
+    </flow>
+    
+    <flow name="post:${symbol_escape}${projectName}${symbol_escape}create:${artifactId}-config">
+        <flow-ref doc:name="${artifactId}-create-sub-flow" doc:id="081fe753-6592-4a54-abee-b945013b9d38" name="${artifactId}-create-sub-flow" />
+    </flow>
+    <flow name="delete:${symbol_escape}${projectName}${symbol_escape}delete${symbol_escape}(id):${artifactId}-config">
+        <flow-ref doc:name="${artifactId}-deletion-sub-flow" doc:id="9790ec99-298b-4678-a27a-390d185b1792" name="${artifactId}-deletion-sub-flow" />
+    </flow>
+    <flow name="patch:${symbol_escape}${projectName}${symbol_escape}update${symbol_escape}(id):${artifactId}-config">
+       <flow-ref doc:name="${artifactId}-update-sub-flow" doc:id="d94fd5f7-6b9d-41a2-b27b-a35ba51db880" name="${artifactId}-update-sub-flow" />
+    </flow>
+    <flow name="get:${symbol_escape}${projectName}${symbol_escape}find${symbol_escape}(id):${artifactId}-config">
+       <flow-ref doc:name="${artifactId}-get-sub-flow" doc:id="593dc41c-d33d-4399-be59-2541f4534be0" name="${artifactId}-get-sub-flow" />
+    </flow>
+</mule>

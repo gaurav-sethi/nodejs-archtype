@@ -1,0 +1,54 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	
+	
+
+	<sub-flow name="${artifactId}-create-sub-flow">
+	
+		<set-variable value="${artifactId}-create-sub-flow"
+			doc:id="d815eb14-d737-45fd-b110-a10fd015ea41" doc:name="Set logMessage" variableName="logMessage" />			
+		<set-payload value='{
+"sample":"POST"
+}' doc:name="Set payload" doc:id="4d06adc3-dfee-403f-8f8c-3e00ae610690" mimeType="application/json"/>
+		<set-variable value="#[201]" doc:name="httpStatus" doc:id="0ed10754-9547-45b5-b508-29097cf298fc" variableName="httpStatus"/>
+	</sub-flow>
+
+	<sub-flow name="${artifactId}-update-sub-flow">
+	
+		<set-variable value="${artifactId}-update-sub-flow"
+			doc:id="d815eb14-d737-45fd-b110-a10fd015ea42" doc:name="Set logMessage" variableName="logMessage" />
+			
+		<set-variable value="#[204]" doc:name="httpStatus" doc:id="7d1d3ebc-fbc7-4a9e-bcb4-2b6ffe196a8b" variableName="httpStatus" />
+		
+	</sub-flow>
+
+
+	<sub-flow name="${artifactId}-deletion-sub-flow">
+		
+		<set-variable value="${artifactId}-deletion-sub-flow"
+			doc:id="d815eb14-d737-45fd-b110-a10fd015ea43" doc:name="Set logMessage" variableName="logMessage" />
+			
+		<set-variable value="#[204]" doc:name="httpStatus" doc:id="8e99e0b2-758f-472e-bed3-a0d6d29a362e" variableName="httpStatus" />
+	</sub-flow>
+
+
+	<sub-flow name="${artifactId}-get-sub-flow">
+		
+		<set-variable value="${artifactId}-get-sub-flow"
+			doc:id="d815eb14-d737-45fd-b110-a10fd015ea44" doc:name="Set logMessage" variableName="logMessage" />
+		<set-payload value='{
+"sample":"GET"
+}' doc:name="payload" doc:id="4ba6eee7-54ee-49be-b3c4-53ec95a13438" mimeType="application/json" />
+
+		<set-variable value="#[200]" doc:name="httpStatus" doc:id="de30945b-79d9-4df8-9250-3e8a0ccb6c3c" variableName="httpStatus" />
+			
+	</sub-flow>
+
+</mule>

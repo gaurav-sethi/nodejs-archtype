@@ -1,0 +1,14 @@
+#%RAML 1.0 Trait
+usage: Apply this trait to each API so that it has a transaction id and application Name to trace its flow within the enterprise
+description: "The service endpoint requires authentication for every API request."
+headers:
+  transactionId:
+    description: A code to track API calls end to end
+    pattern: ^\w{16}$
+    example: abcdefghijklmnop
+   
+  applicationId:
+    description: A code to Identify which application using the API
+    required: true
+    pattern: ^[A-Z]*$
+    example: PIPS

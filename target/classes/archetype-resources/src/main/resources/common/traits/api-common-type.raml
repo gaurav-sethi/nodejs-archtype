@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+types:
+  commonErrorResponse:
+    description: This is generic common error handling
+    type: object
+    properties:
+      error:
+        type: object
+        required: false
+        properties:
+          errorCode:
+            type: integer
+          errorDateTime:
+            type: datetime
+          errorMessage:
+            type: string
+          errorDescription:
+            type: string
+            
+  commonResponse:
+    description: This is generic common response to an API method invocation and can be used to report technical/ business errors, information where the business transaction has been accepted but not processed and successful where the business transaction has been successfully processed.
+    type: object
+    properties:
+      source:
+        type: string

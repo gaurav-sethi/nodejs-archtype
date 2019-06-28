@@ -1,0 +1,6 @@
+ascendon:
+  application:
+    name: ${artifactId}
+    version: v1
+    connection:
+      timeout: '60000'
