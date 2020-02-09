@@ -58,5 +58,11 @@
         <include>mule-artifact.json</include>
       </includes>
     </fileSet>
+	      <fileSet encoding="UTF-8">
+      <directory></directory>
+      <includes>
+        <include>test.js</include>
+      </includes>
+    </fileSet>
   </fileSets>
 </archetype-descriptor>
